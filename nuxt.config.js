@@ -42,7 +42,7 @@ export default {
   /*
    ** Nuxt.js modules
    */
-  modules: [],
+  modules: ['@nuxtjs/style-resources'],
   /*
    ** Axios module configuration
    ** See https://axios.nuxtjs.org/options
@@ -60,5 +60,8 @@ export default {
   env: {
     API_ID: process.env.API_ID,
     AFFILIATE_ID: process.env.AFFILIATE_ID
+  },
+  styleResources: {
+    scss: ['~assets/scss/_functions.scss', '~assets/scss/_variable.scss']
   }
 }

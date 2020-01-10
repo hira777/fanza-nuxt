@@ -30,5 +30,6 @@ For detailed explanation on how things work, check out [Nuxt.js docs](https://nu
 ## メモ
 
 - `fetch`などの Nuxt.js 独自のメソッドは[nuxt-property-decorator](https://github.com/nuxt-community/nuxt-property-decorator)を利用しないと動かない。
+- Scss などで定義した変数や mixin をグローバルなものとしてコンポーネントで利用したい場合は[style-resources-module](https://github.com/nuxt-community/style-resources-module)を利用する。
 
 ## 未解決問題
