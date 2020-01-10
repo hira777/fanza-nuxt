@@ -5,21 +5,22 @@
   "author": "soarflat",
   "private": true,
   "scripts": {
-    "dev": "nuxt",
-    "build": "nuxt build",
-    "start": "nuxt start",
-    "generate": "nuxt generate",
+    "dev": "nuxt-ts",
+    "build": "nuxt-ts build",
+    "start": "nuxt-ts start",
+    "generate": "nuxt-ts generate",
     "lint": "eslint --ext .ts,.js,.vue --ignore-path .gitignore ."
   },
   "dependencies": {
+    "@nuxt/typescript-runtime": "^0.3.6",
     "axios": "^0.19.1",
     "bulma": "^0.8.0",
     "lodash.debounce": "^4.0.8",
-    "nuxt": "^2.0.0",
+    "nuxt": "^2.11.0",
     "vue-property-decorator": "^8.3.0"
   },
   "devDependencies": {
-    "@nuxt/typescript-build": "^0.3.4",
+    "@nuxt/typescript-build": "^0.5.5",
     "@nuxtjs/dotenv": "^1.4.1",
     "@nuxtjs/eslint-config": "^1.0.1",
     "@nuxtjs/eslint-config-typescript": "^1.0.0",
