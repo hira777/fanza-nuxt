@@ -1,0 +1,34 @@
+# Fanza Nuxt
+
+Nuxt.js の学習リポジトリ。
+
+## Build Setup
+
+``` bash
+# install dependencies
+$ yarn install
+
+# serve with hot reload at localhost:3000
+$ yarn dev
+
+# build for production and launch server
+$ yarn build
+$ yarn start
+
+# generate static project
+$ yarn generate
+```
+
+For detailed explanation on how things work, check out [Nuxt.js docs](https://nuxtjs.org).
+
+## 参考記事
+
+- [axiosを乗りこなす機能についての知見集](https://qiita.com/terrierscript/items/ccb56b6fc05aa7821c42)
+- [Nuxt.jsにBulmaを導入して変数を使ったカスタマイズを行う](https://qiita.com/mnmemo/items/5eb4fb8cbfe17670fd36)
+- [Nuxt.jsとServerlessでdotenvを共有する](https://qiita.com/kai_kou/items/4eb83f92296a7311fe39)
+
+## メモ
+
+- `fetch`などの Nuxt.js 独自のメソッドは[nuxt-property-decorator](https://github.com/nuxt-community/nuxt-property-decorator)を利用しないと動かない。
+
+## 未解決問題
