@@ -12,15 +12,14 @@ import FItemList from '~/components/FItemList/index.vue'
 @Component({
   components: {
     FItemList
+  },
+  async fetch() {
+    await itemsModule.init()
   }
 })
 export default class Index extends Vue {
   get items() {
     return itemsModule.items
-  }
-
-  async fetch() {
-    await itemsModule.init()
   }
 }
 </script>
