@@ -1,6 +1,6 @@
 import { Module, VuexModule, Mutation, Action } from 'vuex-module-decorators'
 
-import { getItemList } from '~/api/itemList'
+import { itemListService } from '~/api/itemList'
 import { ItemList } from '~/api/types'
 
 type Item = {
@@ -61,13 +61,13 @@ export default class ItemsModule extends VuexModule {
 
   @Action({ commit: 'SET_ITEMS' })
   async init(): Promise<{ items: Items } | void> {
-    const resposnse = await getItemList()
+    const resposnse = await itemListService.get()
     return { items: normalize(resposnse.data.result.items) }
   }
 
   @Action({ commit: 'SET_ITEMS' })
   async keywordUpdate(keyword: string): Promise<{ items: Items } | void> {
-    const resposnse = await getItemList({ keyword })
+    const resposnse = await itemListService.get({ keyword })
     return { items: normalize(resposnse.data.result.items) }
   }
 

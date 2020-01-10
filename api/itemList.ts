@@ -1,9 +1,13 @@
 import request from '~/utils/request'
 
-export const getItemList = (params?: { keyword?: string }) => {
+const get = (params?: { keyword?: string }) => {
   return request({
     url: '/ItemList',
     method: 'get',
     params
   })
+}
+
+export const itemListService = {
+  get
 }
