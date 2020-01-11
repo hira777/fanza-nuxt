@@ -3,6 +3,7 @@ import { Module, VuexModule, Mutation, Action } from 'vuex-module-decorators'
 import { itemListService } from '~/api/itemList'
 import { ItemList } from '~/api/types'
 
+// 商品検索 API のレスポンスの一部である商品情報を正規化したもの
 type Item = {
   id: string
   title: string
@@ -18,10 +19,15 @@ type Item = {
     medium: string
     large: string
   } | null
-  price: string
+  price: string // "¥250〜" のような文字列
+  date: string
 }
 
 export type Items = Item[] | []
+
+function formatWithComma(number: number): string {
+  return number.toString().replace(/(\d)(?=(\d{3})+$)/g, '$1,')
+}
 
 function normalize(itemList: ItemList): Items {
   return itemList.map((item) => {
@@ -42,7 +48,8 @@ function normalize(itemList: ItemList): Items {
             large: item.sampleMovieURL.size_720_480
           }
         : null,
-      price: item.prices.price
+      price: '¥' + formatWithComma(parseInt(item.prices.price, 10)) + '~',
+      date: item.date
     }
   })
 }

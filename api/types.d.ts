@@ -1,5 +1,14 @@
 /* eslint camelcase: 0 */
-type ItemData = Readonly<{
+
+// 配信タイプ
+type DeliveryType = 'hd' | 'download' | 'stream' | 'androiddl' | 'iosdl'
+export type Delivery = {
+  type: DeliveryType
+  price: string
+}
+
+// 商品検索 API のレスポンスの一部である商品情報
+export type ItemData = Readonly<{
   service_code: string
   service_name: string
   floor_code: string
@@ -38,10 +47,7 @@ type ItemData = Readonly<{
   prices: {
     price: string
     deliveries: {
-      delivery: {
-        type: string
-        price: string
-      }[]
+      delivery: Delivery[]
     }
   }
   date: string
