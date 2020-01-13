@@ -1,6 +1,7 @@
 import request from '~/utils/request'
+import { RequestParameter } from '~/api/itemList.types'
 
-const get = (params?: { keyword?: string }) => {
+const get = (params?: RequestParameter) => {
   return request({
     url: '/ItemList',
     method: 'get',

@@ -1,24 +1,7 @@
 import { Module, VuexModule, Mutation, Action } from 'vuex-module-decorators'
 
 import { itemListService } from '~/api/itemList'
-import { ItemList, ItemData } from '~/api/types'
-
-// 商品検索 API のレスポンスの一部である商品情報を正規化したもの
-export type Item = {
-  id: string
-  title: string
-  url: string
-  imageUrl: {
-    list: string
-    small: string
-    large: string
-  }
-  sampleMovieUrl: string | null
-  price: string // "¥250〜" のような文字列
-  date: string
-}
-
-export type Items = Item[] | []
+import { ItemList, ItemData, RequestParameter } from '~/api/itemList.types'
 
 function getSampleMovieUrl(item: ItemData) {
   return item.sampleMovieURL !== undefined &&
@@ -49,16 +32,43 @@ function normalize(itemList: ItemList): Items {
   })
 }
 
-@Module({
-  name: 'itemsModule',
-  stateFactory: true,
-  namespaced: true
-})
-export default class ItemsModule extends VuexModule {
-  private _items: Items = []
+// 商品検索 API のレスポンスの一部である商品情報を正規化したもの
+export type Item = {
+  id: string
+  title: string
+  url: string
+  imageUrl: {
+    list: string
+    small: string
+    large: string
+  }
+  sampleMovieUrl: string | null
+  price: string // "¥250〜" のような文字列
+  date: string
+}
 
-  get items() {
-    return this._items
+export type Items = Item[] | []
+
+interface ItemsState {
+  items: Items
+  totalCount: number
+}
+
+@Module({
+  name: 'items',
+  stateFactory: true,
+  namespaced: false
+})
+export default class ItemsModule extends VuexModule implements ItemsState {
+  public items: Items = []
+  public totalCount: number = 0
+
+  get all() {
+    return this.items
+  }
+
+  get count() {
+    return this.items.length
   }
 
   get videoUrlById() {
@@ -69,20 +79,33 @@ export default class ItemsModule extends VuexModule {
     }
   }
 
-  @Action({ commit: 'SET_ITEMS' })
-  async init(): Promise<{ items: Items } | void> {
-    const resposnse = await itemListService.get()
-    return { items: normalize(resposnse.data.result.items) }
+  @Action
+  async init(params: RequestParameter) {
+    console.log(params)
+    await this.update(params)
   }
 
-  @Action({ commit: 'SET_ITEMS' })
-  async keywordUpdate(keyword: string): Promise<{ items: Items } | void> {
-    const resposnse = await itemListService.get({ keyword })
-    return { items: normalize(resposnse.data.result.items) }
+  @Action
+  keywordUpdate(params: RequestParameter) {
+    this.update(params)
+  }
+
+  @Action
+  async update(params: RequestParameter) {
+    const resposnse = await itemListService.get(params)
+    const { total_count, items } = resposnse.data.result
+
+    this.context.commit('SET_TOTAL_COUNT', parseInt(total_count, 10))
+    this.context.commit('SET_ITEMS', normalize(items))
   }
 
   @Mutation
-  ['SET_ITEMS']({ items }: { items: Items }): void {
-    this._items = items
+  ['SET_ITEMS'](items: Items): void {
+    this.items = items
+  }
+
+  @Mutation
+  ['SET_TOTAL_COUNT'](count: number): void {
+    this.totalCount = count
   }
 }

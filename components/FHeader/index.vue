@@ -31,7 +31,7 @@ export default class FHeader extends Vue {
       /\u3000/g,
       ' '
     )
-    itemsModule.keywordUpdate(value)
+    itemsModule.keywordUpdate({ keyword: value })
   }, 1000)
 }
 </script>
