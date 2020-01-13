@@ -55,9 +55,9 @@ interface ItemsState {
 }
 
 @Module({
-  name: 'items',
+  name: 'entities/itemsModule',
   stateFactory: true,
-  namespaced: false
+  namespaced: true
 })
 export default class ItemsModule extends VuexModule implements ItemsState {
   public items: Items = []
@@ -81,7 +81,6 @@ export default class ItemsModule extends VuexModule implements ItemsState {
 
   @Action
   async init(params: RequestParameter) {
-    console.log(params)
     await this.update(params)
   }
 

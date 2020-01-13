@@ -11,7 +11,7 @@
 
 <script lang="ts">
 import { Vue, Component, Prop, Emit } from 'nuxt-property-decorator'
-import { Items } from '~/store/itemsModule'
+import { Items } from '~/store/entities/itemsModule'
 import FItemListItem from '~/components/FItemList/FItemListItem.vue'
 
 @Component({
