@@ -62,10 +62,16 @@ export default class FItemListItem extends Vue {
 }
 .f-button-play {
   position: absolute;
-  bottom: pxToRem(14px);
-  right: pxToRem(14px);
+  bottom: pxToRem(10px);
+  right: pxToRem(10px);
+  width: pxToRem(36px);
+  height: pxToRem(36px);
+  border: 1px solid #fff;
+  border-radius: 50%;
+  background-color: rgba($color: #000000, $alpha: 0.7);
 }
 .f-icon {
+  margin-left: pxToRem(2px);
   color: #fff;
 }
 .f-image {
