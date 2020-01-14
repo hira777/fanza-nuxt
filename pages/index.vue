@@ -25,13 +25,18 @@ import FVideoModal from '~/components/FVideoModal/index.vue'
     FPagination,
     FVideoModal
   },
-  async fetch({ query }) {
-    const params =
-      typeof query.page === 'string' && query.page !== '1'
-        ? { offset: parseInt(query.page, 10) * 20 }
-        : {}
+  async asyncData({ query }) {
+    const page =
+      typeof query.page === 'string' && parseInt(query.page, 10) !== 1
+        ? parseInt(query.page, 10)
+        : undefined
+    const params = page ? { offset: page * 20 } : {}
     await itemsModule.init(params)
+    if (page) {
+      return { currentPage: page }
+    }
   },
+  scrollToTop: true,
   watchQuery: ['page']
 })
 export default class Index extends Vue {
@@ -43,19 +48,13 @@ export default class Index extends Vue {
     return itemsModule.all
   }
 
-  created() {
-    if (typeof this.$route.query.page === 'string') {
-      this.currentPage = parseInt(this.$route.query.page, 10)
-    }
-  }
-
-  handleUpdateCurrentPage(val: number) {
-    location.href = `/?page=${val}`
-  }
-
   handleClickVideoPlay(id: string) {
     this.visibleVideoModal = true
     this.videoUrl = itemsModule.videoUrlById(id)
+  }
+
+  handleUpdateCurrentPage(val: number) {
+    this.$router.push(`/?page=${val}`)
   }
 }
 </script>
