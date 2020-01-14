@@ -64,14 +64,14 @@ export default class FItemListItem extends Vue {
   position: absolute;
   bottom: pxToRem(10px);
   right: pxToRem(10px);
-  width: pxToRem(36px);
-  height: pxToRem(36px);
+  width: pxToRem(26px);
+  height: pxToRem(26px);
   border: 1px solid #fff;
-  border-radius: 50%;
   background-color: rgba($color: #000000, $alpha: 0.7);
 }
 .f-icon {
   margin-left: pxToRem(2px);
+  font-size: pxToRem(10px);
   color: #fff;
 }
 .f-image {
