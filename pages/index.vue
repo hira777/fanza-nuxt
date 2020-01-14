@@ -5,7 +5,7 @@
     <FPagination
       :current-page="currentPage"
       :page-size="20"
-      :total="200"
+      :total="itemsTotalCount"
       :pager-count="5"
       @update-current-page="handleUpdateCurrentPage"
     />
@@ -33,14 +33,16 @@ import FVideoModal from '~/components/FVideoModal/index.vue'
     const params = page ? { offset: page * 20 } : {}
     await itemsModule.init(params)
     if (page) {
-      return { currentPage: page }
+      return { currentPage: page, itemsTotalCount: itemsModule.totalCount }
     }
+    return { itemsTotalCount: itemsModule.totalCount }
   },
   scrollToTop: true,
   watchQuery: ['page']
 })
 export default class Index extends Vue {
   private currentPage = 1
+  private itemsTotalCount = 0
   private visibleVideoModal = false
   private videoUrl = ''
 

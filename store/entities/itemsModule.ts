@@ -50,8 +50,8 @@ export type Item = {
 export type Items = Item[] | []
 
 interface ItemsState {
-  items: Items
-  totalCount: number
+  _items: Items
+  _totalCount: number
 }
 
 @Module({
@@ -60,20 +60,20 @@ interface ItemsState {
   namespaced: true
 })
 export default class ItemsModule extends VuexModule implements ItemsState {
-  public items: Items = []
-  public totalCount: number = 0
+  public _items: Items = []
+  public _totalCount: number = 0
 
   get all() {
-    return this.items
+    return this._items
   }
 
-  get count() {
-    return this.items.length
+  get totalCount() {
+    return this._totalCount
   }
 
   get videoUrlById() {
     return (id: string) => {
-      const item = this.items.find((item) => item.id === id)
+      const item = this._items.find((item) => item.id === id)
       if (!item || !item.sampleMovieUrl) return ''
       return item.sampleMovieUrl
     }
@@ -100,11 +100,11 @@ export default class ItemsModule extends VuexModule implements ItemsState {
 
   @Mutation
   ['SET_ITEMS'](items: Items): void {
-    this.items = items
+    this._items = items
   }
 
   @Mutation
   ['SET_TOTAL_COUNT'](count: number): void {
-    this.totalCount = count
+    this._totalCount = count
   }
 }
