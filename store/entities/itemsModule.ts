@@ -1,7 +1,7 @@
 import { Module, VuexModule, Mutation, Action } from 'vuex-module-decorators'
 
 import { itemListService } from '~/api/itemList'
-import { ItemList, ItemData, RequestParameter } from '~/api/itemList.types'
+import { ItemData, RequestParameter } from '~/api/itemList.types'
 
 function getSampleMovieUrl(item: ItemData) {
   return item.sampleMovieURL !== undefined &&
@@ -14,7 +14,7 @@ function formatWithComma(number: number): string {
   return number.toString().replace(/(\d)(?=(\d{3})+$)/g, '$1,')
 }
 
-function normalize(itemList: ItemList): Items {
+function normalize(itemList: ItemData[]): Items {
   return itemList.map((item) => {
     return {
       id: item.content_id,
@@ -94,7 +94,7 @@ export default class ItemsModule extends VuexModule implements ItemsState {
     const resposnse = await itemListService.get(params)
     const { total_count, items } = resposnse.data.result
 
-    this.context.commit('SET_TOTAL_COUNT', parseInt(total_count, 10))
+    this.context.commit('SET_TOTAL_COUNT', total_count)
     this.context.commit('SET_ITEMS', normalize(items))
   }
 
