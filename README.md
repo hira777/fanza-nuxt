@@ -30,7 +30,7 @@ For detailed explanation on how things work, check out [Nuxt.js docs](https://nu
 ## メモ
 
 - `fetch`などの Nuxt.js 独自のメソッドは[nuxt-property-decorator](https://github.com/nuxt-community/nuxt-property-decorator)を利用しないと型推論されない。
- - 参考: [asyncData and fetch is not working on TypeScript #5330](https://github.com/nuxt/nuxt.js/issues/5330)
+  - 参考: [asyncData and fetch is not working on TypeScript #5330](https://github.com/nuxt/nuxt.js/issues/5330)
 - Scss などで定義した変数や mixin をグローバルなものとしてコンポーネントで利用したい場合は[style-resources-module](https://github.com/nuxt-community/style-resources-module)を利用する。
 - [vue-property-decoratorで`Property 'title' has no initializer and is not definitely assigned in the constructor.`みたいなエラーの対処法](https://github.com/kaorun343/vue-property-decorator/issues/81#issuecomment-399997760)
 
@@ -38,3 +38,4 @@ For detailed explanation on how things work, check out [Nuxt.js docs](https://nu
 
 - [x] `nuxt-link`の挙動を`script`内で再現することは可能？`location.href`で対応したがこれであってる？
   - `this.$router.push`を使えば OK なはず。
+- [ ] [vuex-module-decorators](https://github.com/championswimmer/vuex-module-decorators)で定義した Store のテスト方法がわからない。
