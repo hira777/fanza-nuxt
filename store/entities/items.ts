@@ -14,7 +14,7 @@ function formatWithComma(number: number): string {
   return number.toString().replace(/(\d)(?=(\d{3})+$)/g, '$1,')
 }
 
-function normalize(itemList: ItemData[]): Items {
+function normalize(itemList: ItemData[]): Item[] {
   return itemList.map((item) => {
     return {
       id: item.content_id,
@@ -47,20 +47,18 @@ export type Item = {
   date: string
 }
 
-export type Items = Item[] | []
-
 interface ItemsState {
-  _items: Items
+  _items: Item[]
   _totalCount: number
 }
 
 @Module({
-  name: 'entities/itemsModule',
+  name: 'entities/items',
   stateFactory: true,
   namespaced: true
 })
-export default class ItemsModule extends VuexModule implements ItemsState {
-  public _items: Items = []
+export default class Items extends VuexModule implements ItemsState {
+  public _items: Item[] = []
   public _totalCount: number = 0
 
   get all() {
@@ -99,7 +97,7 @@ export default class ItemsModule extends VuexModule implements ItemsState {
   }
 
   @Mutation
-  ['SET_ITEMS'](items: Items): void {
+  ['SET_ITEMS'](items: Item[]): void {
     this._items = items
   }
 

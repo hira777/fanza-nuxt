@@ -33,7 +33,7 @@
 
 <script lang="ts">
 import { Vue, Component, Prop, Emit } from 'nuxt-property-decorator'
-import { Item } from '~/store/entities/itemsModule'
+import { Item } from '~/store/entities/items'
 
 @Component
 export default class FItemListItem extends Vue {

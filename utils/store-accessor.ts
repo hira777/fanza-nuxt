@@ -1,12 +1,12 @@
 import { Store } from 'vuex'
 import { getModule } from 'vuex-module-decorators'
-import ItemsModule from '~/store/entities/itemsModule'
+import Items from '~/store/entities/items'
 
 /* eslint import/no-mutable-exports: 0 */
-let itemsModule: ItemsModule
+let itemsModule: Items
 
 function initializeStores(store: Store<any>): void {
-  itemsModule = getModule(ItemsModule, store)
+  itemsModule = getModule(Items, store)
 }
 
 export { initializeStores, itemsModule }

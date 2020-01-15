@@ -11,7 +11,7 @@
 
 <script lang="ts">
 import { Vue, Component, Prop, Emit } from 'nuxt-property-decorator'
-import { Items } from '~/store/entities/itemsModule'
+import { Item } from '~/store/entities/items'
 import FItemListItem from '~/components/FItemList/FItemListItem.vue'
 
 @Component({
@@ -21,7 +21,7 @@ import FItemListItem from '~/components/FItemList/FItemListItem.vue'
 })
 export default class FItemList extends Vue {
   @Prop({ default: () => [] })
-  readonly items!: Items
+  readonly items!: Item[]
 
   @Emit('click-video-play')
   handleClickVideoPlay(id: string) {
