@@ -30,15 +30,22 @@ import FVideoModal from '~/components/FVideoModal/index.vue'
       typeof query.page === 'string' && parseInt(query.page, 10) !== 1
         ? parseInt(query.page, 10)
         : undefined
-    const params = page ? { offset: page * 20 } : {}
-    await itemsModule.init(params)
-    if (page) {
-      return { currentPage: page, itemsTotalCount: itemsModule.totalCount }
+    const keyword =
+      typeof query.keyword === 'string' ? query.keyword : undefined
+    const params = {
+      ...(page && { offset: page * 20 }),
+      ...(keyword && { keyword })
     }
-    return { itemsTotalCount: itemsModule.totalCount }
+
+    await itemsModule.init(params)
+
+    return {
+      ...(page && { currentPage: page }),
+      itemsTotalCount: itemsModule.totalCount
+    }
   },
   scrollToTop: true,
-  watchQuery: ['page']
+  watchQuery: ['page', 'keyword']
 })
 export default class Index extends Vue {
   private currentPage = 1
@@ -56,7 +63,9 @@ export default class Index extends Vue {
   }
 
   handleUpdateCurrentPage(val: number) {
-    this.$router.push(`/?page=${val}`)
+    this.$router.push({
+      query: { ...this.$route.query, page: String(val) }
+    })
   }
 }
 </script>
