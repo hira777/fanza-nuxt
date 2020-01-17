@@ -1,15 +1,34 @@
 <template>
-  <nav class="pagination is-centered" role="navigation" aria-label="pagination">
+  <nav
+    class="pagination f-pagination is-right is-small"
+    role="navigation"
+    aria-label="pagination"
+  >
     <a
       class="pagination-previous"
       :disabled="disabledPrev"
       @click="handleClickPrev"
-      >Previous</a
+      >前へ</a
     >
-    <a class="pagination-next" :disabled="disabledNext" @click="handleClickNext"
-      >Next page</a
+    <a
+      class="pagination-next f-pagination-next"
+      :disabled="disabledNext"
+      @click="handleClickNext"
+      >次へ</a
     >
     <ul class="pagination-list">
+      <template v-if="prevMoreExists">
+        <li>
+          <a
+            href="#"
+            class="pagination-link"
+            :aria-label="`Goto page 1`"
+            @click.prevent="handleClickPager(1)"
+            >1</a
+          >
+        </li>
+        <li><span class="pagination-ellipsis">&hellip;</span></li>
+      </template>
       <li v-for="pager in pagers" :key="pager">
         <a
           href="#"
@@ -20,6 +39,18 @@
           >{{ pager }}</a
         >
       </li>
+      <template v-if="nextMoreExists">
+        <li><span class="pagination-ellipsis">&hellip;</span></li>
+        <li>
+          <a
+            href="#"
+            class="pagination-link"
+            :aria-label="`Goto page ${pageCount}`"
+            @click.prevent="handleClickPager(pageCount)"
+            >{{ pageCount }}</a
+          >
+        </li>
+      </template>
     </ul>
   </nav>
 </template>
@@ -54,25 +85,33 @@ export default class FPagination extends Vue {
     return this.currentPage === this.pageCount
   }
 
-  get pagers() {
-    const pagers = []
-    const prevMoreExists =
+  get prevMoreExists() {
+    return (
       this.pageCount > this.pagerCount &&
       this.currentPage > this.pagerCount - this.halfPagerCount
-    const nextMoreExists =
+    )
+  }
+
+  get nextMoreExists() {
+    return (
       this.pageCount > this.pagerCount &&
       this.currentPage < this.pageCount - this.halfPagerCount
+    )
+  }
 
-    if (prevMoreExists && !nextMoreExists) {
+  get pagers() {
+    const pagers = []
+
+    if (this.prevMoreExists && !this.nextMoreExists) {
       const startPage = this.pageCount - this.pagerCount + 1
       for (let i = startPage; i < this.pageCount + 1; i++) {
         pagers.push(i)
       }
-    } else if (!prevMoreExists && nextMoreExists) {
+    } else if (!this.prevMoreExists && this.nextMoreExists) {
       for (let i = 1; i < this.pagerCount + 1; i++) {
         pagers.push(i)
       }
-    } else if (prevMoreExists && nextMoreExists) {
+    } else if (this.prevMoreExists && this.nextMoreExists) {
       const offset = Math.floor(this.pagerCount / 2)
       for (
         let i = this.currentPage - offset;
@@ -107,4 +146,18 @@ export default class FPagination extends Vue {
 }
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.f-pagination {
+  &.is-right {
+    justify-content: flex-end;
+
+    .f-pagination-next {
+      order: 4;
+    }
+
+    .pagination-list {
+      flex-grow: 0;
+    }
+  }
+}
+</style>
