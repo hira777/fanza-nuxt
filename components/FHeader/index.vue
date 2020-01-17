@@ -53,6 +53,10 @@ export default class FHeader extends Vue {
   }
 
   search(keyword: string) {
+    const { keyword: queryKeyword } = this.$route.query
+    if (queryKeyword === undefined && keyword === '') return
+    if (queryKeyword && queryKeyword === keyword) return
+
     this.isLoading = true
 
     const path = keyword === '' ? '/' : `/?keyword=${keyword}`
