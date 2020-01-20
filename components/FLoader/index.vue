@@ -8,12 +8,16 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component, Prop } from 'nuxt-property-decorator'
+import Vue from 'vue'
 
-@Component
-export default class FLoader extends Vue {
-  @Prop({ default: false }) readonly isActive?: boolean
-}
+export default Vue.extend({
+  props: {
+    isActive: {
+      type: Boolean,
+      required: true
+    }
+  }
+})
 </script>
 
 <style lang="scss" scoped>
