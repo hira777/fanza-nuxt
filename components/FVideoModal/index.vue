@@ -23,44 +23,52 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component, Prop, Emit, Watch } from 'nuxt-property-decorator'
+import Vue from 'vue'
 import FLoader from '~/components/FLoader/index.vue'
 
-@Component({
+export default Vue.extend({
   components: {
     FLoader
+  },
+  props: {
+    visible: {
+      type: Boolean,
+      required: true
+    },
+    videoUrl: {
+      type: String,
+      required: true
+    }
+  },
+  data() {
+    return {
+      isLoading: false
+    }
+  },
+  watch: {
+    videoUrl(val: string) {
+      this.isLoading = val !== ''
+    }
+  },
+  methods: {
+    handleLoad() {
+      this.isLoading = false
+    },
+
+    handleClickClose() {
+      this.hide()
+      this.removeVideo()
+    },
+
+    hide() {
+      this.$emit('update:visible', false)
+    },
+
+    removeVideo() {
+      this.$emit('update:video-url', '')
+    }
   }
 })
-export default class FItemList extends Vue {
-  @Prop({ default: false }) readonly visible?: boolean
-  @Prop({ default: '' }) readonly videoUrl?: string
-
-  private isLoading = false
-
-  handleLoad() {
-    this.isLoading = false
-  }
-
-  handleClickClose() {
-    this.hide()
-    this.removeVideo()
-  }
-
-  @Watch('videoUrl')
-  onChildChanged(val: string) {
-    this.isLoading = val !== ''
-  }
-
-  @Emit('update:visible')
-  hide() {
-    return false
-  }
-
-  @Emit('update:video-url')
-  removeVideo() {
-    return ''
-  }
-}
 </script>
 
 <style lang="scss" scoped></style>
