@@ -32,23 +32,27 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component, Prop, Emit } from 'nuxt-property-decorator'
+import Vue, { PropType } from 'vue'
 import { Item } from '~/store/entities/items'
 
-@Component
-export default class FItemListItem extends Vue {
-  @Prop({ default: () => ({}) })
-  readonly item!: Item
-
-  @Emit('click-video-play')
-  handleClickVideoPlay(id: string) {
-    return id
+export default Vue.extend({
+  props: {
+    item: {
+      type: Object as PropType<Item>,
+      required: true
+    }
+  },
+  computed: {
+    movieExsits(): boolean {
+      return this.item.sampleMovieUrl !== null
+    }
+  },
+  methods: {
+    handleClickVideoPlay(id: string) {
+      this.$emit('click-video-play', id)
+    }
   }
-
-  get movieExsits(): boolean {
-    return this.item.sampleMovieUrl !== null
-  }
-}
+})
 </script>
 
 <style lang="scss" scoped>

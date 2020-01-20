@@ -10,22 +10,24 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component, Prop, Emit } from 'nuxt-property-decorator'
+import Vue, { PropType } from 'vue'
 import { Item } from '~/store/entities/items'
 import FItemListItem from '~/components/FItemList/FItemListItem.vue'
 
-@Component({
+export default Vue.extend({
   components: {
     FItemListItem
+  },
+  props: {
+    items: {
+      type: Array as PropType<Item[]>,
+      required: true
+    }
+  },
+  methods: {
+    handleClickVideoPlay(id: string) {
+      this.$emit('click-video-play', id)
+    }
   }
 })
-export default class FItemList extends Vue {
-  @Prop({ default: () => [] })
-  readonly items!: Item[]
-
-  @Emit('click-video-play')
-  handleClickVideoPlay(id: string) {
-    return id
-  }
-}
 </script>
