@@ -56,94 +56,103 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component, Prop, Emit } from 'nuxt-property-decorator'
+import Vue from 'vue'
 
-@Component
-export default class FPagination extends Vue {
-  // 現在のページ番号
-  @Prop({ required: true, default: 0 }) readonly currentPage!: number
-  // 1ページのアイテム数
-  @Prop({ required: true, default: 0 }) readonly pageSize!: number
-  // アイテムの合計数
-  @Prop({ required: true, default: 0 }) readonly total!: number
-  // ページャー（ボタン）の数
-  @Prop({ required: true, default: 1 }) readonly pagerCount!: number
-
-  get pageCount() {
-    return Math.ceil(this.total / this.pageSize)
-  }
-
-  get halfPagerCount() {
-    return (this.pagerCount - 1) / 2
-  }
-
-  get disabledPrev() {
-    return this.pageCount === 1 || this.currentPage === 1
-  }
-
-  get disabledNext() {
-    return this.currentPage === this.pageCount
-  }
-
-  get prevMoreExists() {
-    return (
-      this.pageCount > this.pagerCount &&
-      this.currentPage > this.pagerCount - this.halfPagerCount
-    )
-  }
-
-  get nextMoreExists() {
-    return (
-      this.pageCount > this.pagerCount &&
-      this.currentPage < this.pageCount - this.halfPagerCount
-    )
-  }
-
-  get pagers() {
-    const pagers = []
-
-    if (this.prevMoreExists && !this.nextMoreExists) {
-      const startPage = this.pageCount - this.pagerCount + 1
-      for (let i = startPage; i < this.pageCount + 1; i++) {
-        pagers.push(i)
-      }
-    } else if (!this.prevMoreExists && this.nextMoreExists) {
-      for (let i = 1; i < this.pagerCount + 1; i++) {
-        pagers.push(i)
-      }
-    } else if (this.prevMoreExists && this.nextMoreExists) {
-      const offset = Math.floor(this.pagerCount / 2)
-      for (
-        let i = this.currentPage - offset;
-        i <= this.currentPage + offset;
-        i++
-      ) {
-        pagers.push(i)
-      }
-    } else {
-      for (let i = 1; i <= this.pageCount; i++) {
-        pagers.push(i)
-      }
+export default Vue.extend({
+  props: {
+    currentPage: {
+      type: Number,
+      required: true
+    },
+    pageSize: {
+      type: Number,
+      required: true
+    },
+    total: {
+      type: Number,
+      required: true
+    },
+    pagerCount: {
+      type: Number,
+      required: true,
+      default: 1
     }
+  },
+  computed: {
+    pageCount(): number {
+      return Math.ceil(this.total / this.pageSize)
+    },
 
-    return pagers
-  }
+    halfPagerCount(): number {
+      return (this.pagerCount - 1) / 2
+    },
 
-  @Emit('update-current-page')
-  handleClickPager(pager: number) {
-    return pager
-  }
+    disabledPrev(): boolean {
+      return this.pageCount === 1 || this.currentPage === 1
+    },
 
-  @Emit('update-current-page')
-  handleClickNext() {
-    return this.currentPage + 1
-  }
+    disabledNext(): boolean {
+      return this.currentPage === this.pageCount
+    },
 
-  @Emit('update-current-page')
-  handleClickPrev() {
-    return this.currentPage - 1
+    prevMoreExists(): boolean {
+      return (
+        this.pageCount > this.pagerCount &&
+        this.currentPage > this.pagerCount - this.halfPagerCount
+      )
+    },
+
+    nextMoreExists(): boolean {
+      return (
+        this.pageCount > this.pagerCount &&
+        this.currentPage < this.pageCount - this.halfPagerCount
+      )
+    },
+
+    pagers(): number[] {
+      const pagers = []
+
+      if (this.prevMoreExists && !this.nextMoreExists) {
+        const startPage = this.pageCount - this.pagerCount + 1
+        for (let i = startPage; i < this.pageCount + 1; i++) {
+          pagers.push(i)
+        }
+      } else if (!this.prevMoreExists && this.nextMoreExists) {
+        for (let i = 1; i < this.pagerCount + 1; i++) {
+          pagers.push(i)
+        }
+      } else if (this.prevMoreExists && this.nextMoreExists) {
+        const offset = Math.floor(this.pagerCount / 2)
+        for (
+          let i = this.currentPage - offset;
+          i <= this.currentPage + offset;
+          i++
+        ) {
+          pagers.push(i)
+        }
+      } else {
+        for (let i = 1; i <= this.pageCount; i++) {
+          pagers.push(i)
+        }
+      }
+
+      return pagers
+    }
+  },
+  methods: {
+    handleClickPager(pager: number) {
+      this.$emit('update-current-page', pager)
+    },
+
+    handleClickNext() {
+      this.$emit('update-current-page', this.currentPage + 1)
+    },
+
+    handleClickPrev() {
+      this.$emit('update-current-page', this.currentPage - 1)
+    }
   }
-}
+})
 </script>
 
 <style lang="scss" scoped>
