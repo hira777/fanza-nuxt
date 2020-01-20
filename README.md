@@ -26,6 +26,7 @@ For detailed explanation on how things work, check out [Nuxt.js docs](https://nu
 - [axiosを乗りこなす機能についての知見集](https://qiita.com/terrierscript/items/ccb56b6fc05aa7821c42)
 - [Nuxt.jsにBulmaを導入して変数を使ったカスタマイズを行う](https://qiita.com/mnmemo/items/5eb4fb8cbfe17670fd36)
 - [Nuxt.jsとServerlessでdotenvを共有する](https://qiita.com/kai_kou/items/4eb83f92296a7311fe39)
+- [Vue + TypeScriptでpropsのObjectやArrayに型をつける](https://qiita.com/iMasanari/items/31d8a26c7ee22793585c)
 
 ## メモ
 
@@ -33,6 +34,7 @@ For detailed explanation on how things work, check out [Nuxt.js docs](https://nu
   - 参考: [asyncData and fetch is not working on TypeScript #5330](https://github.com/nuxt/nuxt.js/issues/5330)
 - Scss などで定義した変数や mixin をグローバルなものとしてコンポーネントで利用したい場合は[style-resources-module](https://github.com/nuxt-community/style-resources-module)を利用する。
 - [vue-property-decoratorで`Property 'title' has no initializer and is not definitely assigned in the constructor.`みたいなエラーの対処法](https://github.com/kaorun343/vue-property-decorator/issues/81#issuecomment-399997760)
+- [公式の`vue`で型推論をする際は、`computed`の戻り値の型にアノテーションをつけないとうまく推論できない時があるらしい](https://jp.vuejs.org/v2/guide/typescript.html#%E6%88%BB%E3%82%8A%E5%80%A4%E3%81%AE%E5%9E%8B%E3%81%AB%E3%82%A2%E3%83%8E%E3%83%86%E3%83%BC%E3%82%B7%E3%83%A7%E3%83%B3%E3%82%92%E3%81%A4%E3%81%91%E3%82%8B)
 
 ## 未解決問題
 
