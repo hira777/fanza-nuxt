@@ -1,0 +1,10 @@
+@import "~bulma/sass/utilities/initial-variables";
+@import "~bulma/sass/utilities/functions";
+@import "~bulma/sass/utilities/derived-variables.sass";
+
+// https://bulma.io/documentation/components/pagination/#variables
+$pagination-hover-border-color: $red;
+$pagination-current-background-color: $red;
+$pagination-current-border-color: $red;
+
+@import "~bulma/bulma";

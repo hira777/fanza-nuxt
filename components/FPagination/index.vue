@@ -32,7 +32,7 @@
       <li v-for="pager in pagers" :key="pager">
         <a
           href="#"
-          class="pagination-link"
+          class="pagination-link f-pagination-link"
           :aria-label="`Goto page ${pager}`"
           :class="{ 'is-current': currentPage === pager }"
           @click.prevent="handleClickPager(pager)"
@@ -160,4 +160,10 @@ export default class FPagination extends Vue {
     }
   }
 }
+// .f-pagination-link {
+//   &.is-current {
+//     background-color: $red;
+//     border-color: $red;
+//   }
+// }
 </style>

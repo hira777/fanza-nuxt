@@ -18,7 +18,10 @@
               />
             </div>
             <div class="control">
-              <button class="button is-small is-info" @click="handleClick">
+              <button
+                class="button is-small is-danger has-text-weight-bold"
+                @click="handleClick"
+              >
                 検索
               </button>
             </div>
