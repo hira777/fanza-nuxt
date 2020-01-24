@@ -78,12 +78,7 @@ export default class Items extends VuexModule implements ItemsState {
   }
 
   @Action
-  async init(params: RequestParameter) {
-    await this.update(params)
-  }
-
-  @Action
-  async update(params: RequestParameter) {
+  async search(params: RequestParameter) {
     const resposnse = await itemListService.get(params)
     const { total_count, items } = resposnse.data.result
 
