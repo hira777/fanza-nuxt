@@ -26,7 +26,7 @@ For detailed explanation on how things work, check out [Nuxt.js docs](https://nu
 - [axiosを乗りこなす機能についての知見集](https://qiita.com/terrierscript/items/ccb56b6fc05aa7821c42)
 - [Nuxt.jsにBulmaを導入して変数を使ったカスタマイズを行う](https://qiita.com/mnmemo/items/5eb4fb8cbfe17670fd36)
 - [Nuxt.jsとServerlessでdotenvを共有する](https://qiita.com/kai_kou/items/4eb83f92296a7311fe39)
-- [Nuxt.jsにBulmaを導入して変数を使ったカスタマイズを行う](https://qiita.com/mnmemo/items/5eb4fb8cbfe17670fd36)
+- [Nuxt.js で SSR 時にも永続化された store の値を使う](https://qiita.com/nyk510/items/d184be3724c52713ac90)
 
 ## メモ
 
