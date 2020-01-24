@@ -40,6 +40,11 @@ export default class FHeader extends Vue {
   private isLoading: boolean = false
   private keyword: string = ''
 
+  created() {
+    const { keyword } = this.$route.query
+    this.keyword = (typeof keyword === 'string' && keyword) || ''
+  }
+
   handleClick() {
     this.search(this.keyword)
   }
