@@ -37,12 +37,6 @@ export default class SearchSettings extends VuexModule
     cookies.set('resultsPerPage', String(resultsPerPage))
   }
 
-  @Action
-  setResultsPerPage(resultsPerPage: ResultsPerPage) {
-    this.context.commit('SET_RESULTS_PER_PAGE', resultsPerPage)
-    cookies.set('resultsPerPage', String(resultsPerPage))
-  }
-
   @Mutation
   ['SET_RESULTS_PER_PAGE'](resultsPerPage: ResultsPerPage): void {
     this._resultsPerPage = resultsPerPage

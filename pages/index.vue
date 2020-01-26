@@ -84,27 +84,14 @@ export default class Index extends Vue {
     return searchSettingsModule.resultsPerPages
   }
 
-  search(params: RequestParameter) {
-    itemsModule.search({ ...this.requestParameter, ...params })
-  }
-
   handleClickResultsPerPage(val: ResultsPerPage) {
     const isFirstPage =
       !this.$route.query.page || this.$route.query.page === '1'
 
+    searchSettingsModule.setCookieToResultsPerPage(val)
     if (isFirstPage) {
-      searchSettingsModule.setResultsPerPage(val)
-      const keyword =
-        typeof this.$route.query.keyword === 'string'
-          ? this.$route.query.keyword
-          : undefined
-      this.search({
-        hits: val,
-        ...(keyword && { keyword })
-      })
-      // TODO: ローディング制御
+      location.reload()
     } else {
-      searchSettingsModule.setCookieToResultsPerPage(val)
       // eslint-disable-next-line
       const { page, ...query } = this.$route.query
       this.$router.push({ query })
