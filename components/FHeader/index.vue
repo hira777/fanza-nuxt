@@ -35,11 +35,7 @@
 <script lang="ts">
 import { Vue, Component } from 'nuxt-property-decorator'
 
-@Component({
-  created() {
-    this.keyword = this.$route.query.keyword || ''
-  }
-})
+@Component
 export default class FHeader extends Vue {
   private isLoading: boolean = false
   private keyword: string = ''
