@@ -42,7 +42,11 @@ export default {
   /*
    ** Nuxt.js modules
    */
-  modules: ['@nuxtjs/style-resources', 'nuxt-fontawesome'],
+  modules: [
+    'cookie-universal-nuxt',
+    '@nuxtjs/style-resources',
+    'nuxt-fontawesome'
+  ],
 
   fontawesome: {
     imports: [

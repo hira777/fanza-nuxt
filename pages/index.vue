@@ -19,7 +19,6 @@
 
 <script lang="ts">
 import { Vue, Component } from 'nuxt-property-decorator'
-import Cookie from 'cookie-universal'
 import { itemsModule, searchSettingsModule } from '~/store'
 import { ResultsPerPage } from '~/store/app/searchSettings'
 import { RequestParameters } from '~/api/itemList'
@@ -35,11 +34,10 @@ import FVideoModal from '~/components/FVideoModal/index.vue'
     FSearchGuide,
     FVideoModal
   },
-  async asyncData({ query, req, res }) {
-    const cookies = (require('cookie-universal') as typeof Cookie)(req, res)
+  async asyncData({ app, query }) {
     // TODO: 型アサーションをつけずに済む方法はない？
-    const resultsPerPage = ((cookies.get('resultsPerPage') &&
-      parseInt(cookies.get('resultsPerPage'), 10)) ||
+    const resultsPerPage = ((app.$cookies.get('resultsPerPage') &&
+      parseInt(app.$cookies.get('resultsPerPage'), 10)) ||
       20) as ResultsPerPage
     const page =
       typeof query.page === 'string' && parseInt(query.page, 10) !== 1
