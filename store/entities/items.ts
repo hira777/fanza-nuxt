@@ -1,7 +1,23 @@
+/* eslint camelcase: 0 */
 import { Module, VuexModule, Mutation, Action } from 'vuex-module-decorators'
 
-import { itemListService } from '~/api/itemList'
-import { ItemData, RequestParameter } from '~/api/itemList.types'
+import ItemData from 'types/item'
+import { itemListService, RequestParameters } from '~/api/itemList'
+
+// 商品検索 API のレスポンスの一部である商品情報を正規化したもの
+export type Item = {
+  id: string
+  title: string
+  url: string
+  imageUrl: {
+    list: string
+    small: string
+    large: string
+  }
+  sampleMovieUrl: string | null
+  price: string // "¥250〜" のような文字列
+  date: string
+}
 
 function getSampleMovieUrl(item: ItemData) {
   return item.sampleMovieURL !== undefined &&
@@ -30,21 +46,6 @@ function normalize(itemList: ItemData[]): Item[] {
       date: item.date
     }
   })
-}
-
-// 商品検索 API のレスポンスの一部である商品情報を正規化したもの
-export type Item = {
-  id: string
-  title: string
-  url: string
-  imageUrl: {
-    list: string
-    small: string
-    large: string
-  }
-  sampleMovieUrl: string | null
-  price: string // "¥250〜" のような文字列
-  date: string
 }
 
 interface ItemsState {
@@ -78,7 +79,7 @@ export default class Items extends VuexModule implements ItemsState {
   }
 
   @Action
-  async search(params: RequestParameter) {
+  async search(params: RequestParameters) {
     const resposnse = await itemListService.get(params)
     const { total_count, items } = resposnse.data.result
 

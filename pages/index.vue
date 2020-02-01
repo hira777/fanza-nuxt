@@ -22,7 +22,7 @@ import { Vue, Component } from 'nuxt-property-decorator'
 import Cookie from 'cookie-universal'
 import { itemsModule, searchSettingsModule } from '~/store'
 import { ResultsPerPage } from '~/store/app/searchSettings'
-import { RequestParameter } from '~/api/itemList.types'
+import { RequestParameters } from '~/api/itemList'
 import FItemList from '~/components/FItemList/index.vue'
 import FPagination from '~/components/FPagination/index.vue'
 import FSearchGuide from '~/components/FSearchGuide/index.vue'
@@ -47,7 +47,7 @@ import FVideoModal from '~/components/FVideoModal/index.vue'
         : undefined
     const keyword =
       typeof query.keyword === 'string' ? query.keyword : undefined
-    const params: RequestParameter = {
+    const params: RequestParameters = {
       hits: resultsPerPage,
       ...(page && { offset: page * resultsPerPage }),
       ...(keyword && { keyword })
@@ -66,7 +66,7 @@ import FVideoModal from '~/components/FVideoModal/index.vue'
   watchQuery: ['page', 'keyword']
 })
 export default class Index extends Vue {
-  private requestParameter: RequestParameter = {}
+  private requestParameter: RequestParameters = {}
   private currentPage = 1
   private itemsTotalCount = 0
   private visibleVideoModal = false
