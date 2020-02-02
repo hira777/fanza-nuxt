@@ -1,5 +1,6 @@
 /* eslint camelcase: 0 */
-import { Module, VuexModule, Mutation, Action } from 'vuex-module-decorators'
+// import { Module, VuexModule, Mutation, Action } from 'vuex-module-decorators'
+import { Getters, Mutations, Actions } from 'vuex'
 
 import ItemData from 'types/item'
 import { itemListService, RequestParameters } from '~/api/itemList'
@@ -48,52 +49,71 @@ function normalize(itemList: ItemData[]): Item[] {
   })
 }
 
-interface ItemsState {
-  _items: Item[]
-  _totalCount: number
+export type S = {
+  items: Item[]
+  totalCount: number
 }
 
-@Module({
-  name: 'entities/items',
-  stateFactory: true,
-  namespaced: true
+export type G = {
+  all: Item[]
+  totalCount: number
+  videoUrlById: (id: string) => string
+}
+
+export type RG = {
+  'entities/items/all': G['all']
+  'entities/items/totalCount': G['totalCount']
+  'entities/items/videoUrlById': G['videoUrlById']
+}
+
+export type M = {
+  setItems: Item[]
+  setTotalCount: number
+}
+
+export type RM = {
+  'entities/items/setItems': M['setItems']
+  'entities/items/setTotalCount': M['setItems']
+}
+
+export type A = {
+  search: RequestParameters
+}
+
+export type RA = {
+  'entities/items/search': A['search']
+}
+
+export const state = (): S => ({
+  items: [],
+  totalCount: 0
 })
-export default class Items extends VuexModule implements ItemsState {
-  public _items: Item[] = []
-  public _totalCount: number = 0
 
-  get all() {
-    return this._items
+export const getters: Getters<S, G> = {
+  all: (state) => state.items,
+  totalCount: (state) => state.totalCount,
+  videoUrlById: (state) => (id: string) => {
+    const item = state.items.find((item) => item.id === id)
+    if (!item || !item.sampleMovieUrl) return ''
+    return item.sampleMovieUrl
   }
+}
 
-  get totalCount() {
-    return this._totalCount
+export const mutations: Mutations<S, M> = {
+  setItems(state, payload) {
+    state.items = payload
+  },
+  setTotalCount(state, payload) {
+    state.totalCount = payload
   }
+}
 
-  get videoUrlById() {
-    return (id: string) => {
-      const item = this._items.find((item) => item.id === id)
-      if (!item || !item.sampleMovieUrl) return ''
-      return item.sampleMovieUrl
-    }
-  }
-
-  @Action
-  async search(params: RequestParameters) {
+export const actions: Actions<S, A, G, M> = {
+  async search({ commit }, params: RequestParameters) {
     const resposnse = await itemListService.get(params)
     const { total_count, items } = resposnse.data.result
 
-    this.context.commit('SET_TOTAL_COUNT', total_count)
-    this.context.commit('SET_ITEMS', normalize(items))
-  }
-
-  @Mutation
-  ['SET_ITEMS'](items: Item[]): void {
-    this._items = items
-  }
-
-  @Mutation
-  ['SET_TOTAL_COUNT'](count: number): void {
-    this._totalCount = count
+    commit('setTotalCount', total_count)
+    commit('setItems', normalize(items))
   }
 }

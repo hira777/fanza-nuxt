@@ -1,6 +1,4 @@
-import Cookie from 'cookie-universal'
 import { Getters, Mutations, Actions } from 'vuex'
-const cookies = Cookie()
 
 export type ResultsPerPage = 20 | 40 | 80
 
@@ -28,12 +26,12 @@ export type RM = {
 }
 
 export type A = {
-  init: ResultsPerPage
+  setResultsPerPage: ResultsPerPage
   setCookieToResultsPerPage: ResultsPerPage
 }
 
 export type RA = {
-  'app/searchSettings/init': A['init']
+  'app/searchSettings/setResultsPerPage': A['setResultsPerPage']
   'app/searchSettings/setCookieToResultsPerPage': A['setCookieToResultsPerPage']
 }
 
@@ -54,10 +52,12 @@ export const mutations: Mutations<S, M> = {
 }
 
 export const actions: Actions<S, A, G, M> = {
-  init({ commit }, resultsPerPage: ResultsPerPage) {
+  setResultsPerPage({ commit }, resultsPerPage: ResultsPerPage) {
     commit('setResultsPerPage', resultsPerPage)
   },
   setCookieToResultsPerPage(_, resultsPerPage: ResultsPerPage) {
-    cookies.set('resultsPerPage', String(resultsPerPage))
+    // TODO: 型エラーの解消方法（this.$cookies に型を定義する方法）がわからない
+    // @ts-ignore
+    this.$cookies.set('resultsPerPage', String(resultsPerPage))
   }
 }
