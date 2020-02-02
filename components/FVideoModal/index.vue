@@ -35,7 +35,7 @@ export default class FItemList extends Vue {
   @Prop({ default: false }) readonly visible?: boolean
   @Prop({ default: '' }) readonly videoUrl?: string
 
-  private isLoading = false
+  isLoading = false
 
   handleLoad() {
     this.isLoading = false

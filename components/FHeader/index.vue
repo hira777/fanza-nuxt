@@ -37,8 +37,8 @@ import { Vue, Component } from 'nuxt-property-decorator'
 
 @Component
 export default class FHeader extends Vue {
-  private isLoading: boolean = false
-  private keyword: string = ''
+  isLoading: boolean = false
+  keyword: string = ''
 
   created() {
     const { keyword } = this.$route.query
