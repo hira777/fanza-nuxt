@@ -1,5 +1,4 @@
 /* eslint camelcase: 0 */
-// import { Module, VuexModule, Mutation, Action } from 'vuex-module-decorators'
 import { Getters, Mutations, Actions } from 'vuex';
 
 import ItemData from 'types/item';

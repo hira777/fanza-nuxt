@@ -56,7 +56,6 @@ import FVideoModal from '~/components/FVideoModal/index.vue';
     store.dispatch('app/searchSettings/setResultsPerPage', resultsPerPage);
 
     return {
-      requestParameter: params,
       ...(page && { currentPage: page }),
       itemsTotalCount: store.getters['entities/items/totalCount']
     };
@@ -67,7 +66,6 @@ import FVideoModal from '~/components/FVideoModal/index.vue';
 export default class Index extends Vue {
   $store!: Vuex.ExStore;
 
-  requestParameter: RequestParameters = {};
   currentPage = 1;
   itemsTotalCount = 0;
   visibleVideoModal = false;
