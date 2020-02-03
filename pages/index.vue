@@ -35,7 +35,9 @@ import FVideoModal from '~/components/FVideoModal/index.vue';
     FSearchGuide,
     FVideoModal
   },
-  async asyncData({ app, store, query }) {
+  async asyncData(context) {
+    const { app, query } = context;
+    const store: Vuex.ExStore = context.store;
     const resultsPerPage = (parseInt(app.$cookies.get('resultsPerPage'), 10) ||
       20) as ResultsPerPage;
     const page =
@@ -49,18 +51,14 @@ import FVideoModal from '~/components/FVideoModal/index.vue';
       ...(page && { offset: page * resultsPerPage }),
       ...(keyword && { keyword })
     };
-    await (store as Vuex.ExStore).dispatch('entities/items/search', params);
-    (store as Vuex.ExStore).dispatch(
-      'app/searchSettings/setResultsPerPage',
-      resultsPerPage
-    );
+
+    await store.dispatch('entities/items/search', params);
+    store.dispatch('app/searchSettings/setResultsPerPage', resultsPerPage);
 
     return {
       requestParameter: params,
       ...(page && { currentPage: page }),
-      itemsTotalCount: (store as Vuex.ExStore).getters[
-        'entities/items/totalCount'
-      ]
+      itemsTotalCount: store.getters['entities/items/totalCount']
     };
   },
   scrollToTop: true,
