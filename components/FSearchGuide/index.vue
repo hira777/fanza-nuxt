@@ -26,16 +26,16 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component, Prop, Emit } from 'nuxt-property-decorator'
+import { Vue, Component, Prop, Emit } from 'nuxt-property-decorator';
 
 @Component
 export default class FSearchGuide extends Vue {
-  @Prop({ required: true }) readonly currentResultPerPage?: number
-  @Prop({ required: true }) readonly resultsPerPages?: number[]
+  @Prop({ required: true }) readonly currentResultPerPage?: number;
+  @Prop({ required: true }) readonly resultsPerPages?: number[];
 
   @Emit('update-results-per-page')
   handleClickResultsPerPage(resultsPerPage: number) {
-    return resultsPerPage
+    return resultsPerPage;
   }
 }
 </script>

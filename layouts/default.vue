@@ -6,8 +6,8 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component } from 'nuxt-property-decorator'
-import FHeader from '~/components/FHeader/index.vue'
+import { Vue, Component } from 'nuxt-property-decorator';
+import FHeader from '~/components/FHeader/index.vue';
 
 @Component({
   components: {

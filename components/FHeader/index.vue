@@ -33,45 +33,45 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component } from 'nuxt-property-decorator'
+import { Vue, Component } from 'nuxt-property-decorator';
 
 @Component
 export default class FHeader extends Vue {
-  isLoading: boolean = false
-  keyword: string = ''
+  isLoading: boolean = false;
+  keyword: string = '';
 
   created() {
-    const { keyword } = this.$route.query
-    this.keyword = (typeof keyword === 'string' && keyword) || ''
+    const { keyword } = this.$route.query;
+    this.keyword = (typeof keyword === 'string' && keyword) || '';
   }
 
   handleClick() {
-    this.search(this.keyword)
+    this.search(this.keyword);
   }
 
   handleEnter($event: KeyboardEvent) {
-    if ($event.keyCode !== 13) return
+    if ($event.keyCode !== 13) return;
 
     const value = ($event.target as HTMLInputElement).value.replace(
       /\u3000/g,
       ' '
-    )
+    );
 
-    this.search(value)
+    this.search(value);
   }
 
   search(keyword: string) {
-    const { keyword: queryKeyword } = this.$route.query
-    if (queryKeyword === undefined && keyword === '') return
-    if (queryKeyword && queryKeyword === keyword) return
+    const { keyword: queryKeyword } = this.$route.query;
+    if (queryKeyword === undefined && keyword === '') return;
+    if (queryKeyword && queryKeyword === keyword) return;
 
-    this.isLoading = true
+    this.isLoading = true;
 
-    const path = keyword === '' ? '/' : `/?keyword=${keyword}`
+    const path = keyword === '' ? '/' : `/?keyword=${keyword}`;
 
     this.$router.push(path, () => {
-      this.isLoading = false
-    })
+      this.isLoading = false;
+    });
   }
 }
 </script>

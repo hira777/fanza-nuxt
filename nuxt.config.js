@@ -1,4 +1,4 @@
-require('dotenv').config()
+require('dotenv').config();
 
 export default {
   mode: 'universal',
@@ -72,4 +72,4 @@ export default {
   styleResources: {
     scss: ['~assets/scss/_functions.scss', '~assets/scss/_variable.scss']
   }
-}
+};
