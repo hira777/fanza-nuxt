@@ -18,14 +18,15 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component } from 'nuxt-property-decorator'
-import { itemsModule, searchSettingsModule } from '~/store'
-import { ResultsPerPage } from '~/store/app/searchSettings'
-import { RequestParameters } from '~/api/itemList'
-import FItemList from '~/components/FItemList/index.vue'
-import FPagination from '~/components/FPagination/index.vue'
-import FSearchGuide from '~/components/FSearchGuide/index.vue'
-import FVideoModal from '~/components/FVideoModal/index.vue'
+import { Vue, Component } from 'nuxt-property-decorator';
+import * as Vuex from 'vuex';
+
+import { ResultsPerPage } from '~/store/app/searchSettings';
+import { RequestParameters } from '~/api/itemList';
+import FItemList from '~/components/FItemList/index.vue';
+import FPagination from '~/components/FPagination/index.vue';
+import FSearchGuide from '~/components/FSearchGuide/index.vue';
+import FVideoModal from '~/components/FVideoModal/index.vue';
 
 @Component({
   components: {
@@ -34,77 +35,77 @@ import FVideoModal from '~/components/FVideoModal/index.vue'
     FSearchGuide,
     FVideoModal
   },
-  async asyncData({ app, query }) {
-    // TODO: 型アサーションをつけずに済む方法はない？
-    const resultsPerPage = ((app.$cookies.get('resultsPerPage') &&
-      parseInt(app.$cookies.get('resultsPerPage'), 10)) ||
-      20) as ResultsPerPage
+  async asyncData(context) {
+    const { app, query } = context;
+    const store: Vuex.ExStore = context.store;
+    const resultsPerPage = (parseInt(app.$cookies.get('resultsPerPage'), 10) ||
+      20) as ResultsPerPage;
     const page =
       typeof query.page === 'string' && parseInt(query.page, 10) !== 1
         ? parseInt(query.page, 10)
-        : undefined
+        : undefined;
     const keyword =
-      typeof query.keyword === 'string' ? query.keyword : undefined
+      typeof query.keyword === 'string' ? query.keyword : undefined;
     const params: RequestParameters = {
       hits: resultsPerPage,
       ...(page && { offset: page * resultsPerPage }),
       ...(keyword && { keyword })
-    }
+    };
 
-    await itemsModule.search(params)
-    searchSettingsModule.init(resultsPerPage)
+    await store.dispatch('entities/items/search', params);
+    store.dispatch('app/searchSettings/setResultsPerPage', resultsPerPage);
 
     return {
-      requestParameter: params,
       ...(page && { currentPage: page }),
-      itemsTotalCount: itemsModule.totalCount
-    }
+      itemsTotalCount: store.getters['entities/items/totalCount']
+    };
   },
   scrollToTop: true,
   watchQuery: ['page', 'keyword']
 })
 export default class Index extends Vue {
-  private requestParameter: RequestParameters = {}
-  private currentPage = 1
-  private itemsTotalCount = 0
-  private visibleVideoModal = false
-  private videoUrl = ''
+  $store!: Vuex.ExStore;
+
+  currentPage = 1;
+  itemsTotalCount = 0;
+  visibleVideoModal = false;
+  videoUrl = '';
 
   get items() {
-    return itemsModule.all
+    return this.$store.getters['entities/items/all'];
   }
 
   get currentResultPerPage() {
-    return searchSettingsModule.resultsPerPage
+    return this.$store.getters['app/searchSettings/resultsPerPage'];
   }
 
   get resultsPerPages() {
-    return searchSettingsModule.resultsPerPages
+    return this.$store.getters['app/searchSettings/resultsPerPages'];
   }
 
   handleClickResultsPerPage(val: ResultsPerPage) {
     const isFirstPage =
-      !this.$route.query.page || this.$route.query.page === '1'
+      !this.$route.query.page || this.$route.query.page === '1';
+    this.$store.dispatch('app/searchSettings/setCookieToResultsPerPage', val);
 
-    searchSettingsModule.setCookieToResultsPerPage(val)
     if (isFirstPage) {
-      location.reload()
+      location.reload();
     } else {
       // eslint-disable-next-line
       const { page, ...query } = this.$route.query
-      this.$router.push({ query })
+      this.$router.push({ query });
     }
   }
 
   handleClickVideoPlay(id: string) {
-    this.visibleVideoModal = true
-    this.videoUrl = itemsModule.videoUrlById(id)
+    this.visibleVideoModal = true;
+    this.videoUrl = this.$store.getters['entities/items/videoUrlById'](id);
   }
 
   handleUpdateCurrentPage(val: number) {
     this.$router.push({
       query: { ...this.$route.query, page: String(val) }
-    })
+    });
   }
 }
 </script>

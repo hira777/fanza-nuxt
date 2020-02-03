@@ -1,9 +1,9 @@
-import axios from 'axios'
+import axios from 'axios';
 
 const service = axios.create({
   baseURL: 'https://api.dmm.com/affiliate/v3/',
   timeout: 5000
-})
+});
 
 service.interceptors.request.use((config) => {
   config.params = {
@@ -15,8 +15,8 @@ service.interceptors.request.use((config) => {
       service: 'digital',
       floor: 'videoa'
     }
-  }
-  return config
-})
+  };
+  return config;
+});
 
-export default service
+export default service;

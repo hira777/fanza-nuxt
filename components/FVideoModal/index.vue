@@ -23,8 +23,8 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component, Prop, Emit, Watch } from 'nuxt-property-decorator'
-import FLoader from '~/components/FLoader/index.vue'
+import { Vue, Component, Prop, Emit, Watch } from 'nuxt-property-decorator';
+import FLoader from '~/components/FLoader/index.vue';
 
 @Component({
   components: {
@@ -32,33 +32,33 @@ import FLoader from '~/components/FLoader/index.vue'
   }
 })
 export default class FItemList extends Vue {
-  @Prop({ default: false }) readonly visible?: boolean
-  @Prop({ default: '' }) readonly videoUrl?: string
+  @Prop({ default: false }) readonly visible?: boolean;
+  @Prop({ default: '' }) readonly videoUrl?: string;
 
-  private isLoading = false
+  isLoading = false;
 
   handleLoad() {
-    this.isLoading = false
+    this.isLoading = false;
   }
 
   handleClickClose() {
-    this.hide()
-    this.removeVideo()
+    this.hide();
+    this.removeVideo();
   }
 
   @Watch('videoUrl')
   onChildChanged(val: string) {
-    this.isLoading = val !== ''
+    this.isLoading = val !== '';
   }
 
   @Emit('update:visible')
   hide() {
-    return false
+    return false;
   }
 
   @Emit('update:video-url')
   removeVideo() {
-    return ''
+    return '';
   }
 }
 </script>

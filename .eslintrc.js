@@ -17,5 +17,6 @@ module.exports = {
   ],
   // add your custom rules here
   rules: {
+    "no-undef": 0
   }
 }
