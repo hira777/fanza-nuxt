@@ -1,6 +1,6 @@
 import { Getters, Mutations, Actions } from 'vuex';
 
-export type ResultsPerPage = 20 | 40 | 80;
+export type ResultsPerPage = 40 | 80 | 120;
 
 export type S = {
   resultsPerPage: ResultsPerPage;
@@ -36,8 +36,8 @@ export type RA = {
 };
 
 export const state = (): S => ({
-  resultsPerPage: 20,
-  resultsPerPages: [20, 40, 80]
+  resultsPerPage: 40,
+  resultsPerPages: [40, 80, 120]
 });
 
 export const getters: Getters<S, G> = {
