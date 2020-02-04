@@ -21,7 +21,7 @@
 import { Vue, Component } from 'nuxt-property-decorator';
 import * as Vuex from 'vuex';
 
-import { ResultsPerPage } from '~/store/app/searchSettings';
+import { ResultsPerPage } from '~/types/searchSettings';
 import { RequestParameters } from '~/api/itemList';
 import FItemList from '~/components/FItemList/index.vue';
 import FPagination from '~/components/FPagination/index.vue';
@@ -53,11 +53,11 @@ import FVideoModal from '~/components/FVideoModal/index.vue';
     };
 
     await store.dispatch('entities/items/search', params);
-    store.dispatch('app/searchSettings/setResultsPerPage', resultsPerPage);
 
     return {
       ...(page && { currentPage: page }),
-      itemsTotalCount: store.getters['entities/items/totalCount']
+      itemsTotalCount: store.getters['entities/items/totalCount'],
+      currentResultPerPage: resultsPerPage
     };
   },
   scrollToTop: true,
@@ -67,7 +67,9 @@ export default class Index extends Vue {
   $store!: Vuex.ExStore;
 
   currentPage = 1;
+  currentResultPerPage: ResultsPerPage = 40;
   itemsTotalCount = 0;
+  resultsPerPages: ResultsPerPage[] = [40, 80, 120];
   visibleVideoModal = false;
   videoUrl = '';
 
@@ -75,24 +77,16 @@ export default class Index extends Vue {
     return this.$store.getters['entities/items/all'];
   }
 
-  get currentResultPerPage() {
-    return this.$store.getters['app/searchSettings/resultsPerPage'];
-  }
-
-  get resultsPerPages() {
-    return this.$store.getters['app/searchSettings/resultsPerPages'];
-  }
-
   handleClickResultsPerPage(val: ResultsPerPage) {
+    this.$cookies.set('resultsPerPage', String(val));
+
     const isFirstPage =
       !this.$route.query.page || this.$route.query.page === '1';
-    this.$store.dispatch('app/searchSettings/setCookieToResultsPerPage', val);
 
     if (isFirstPage) {
       location.reload();
     } else {
-      // eslint-disable-next-line
-      const { page, ...query } = this.$route.query
+      const { page, ...query } = this.$route.query; // eslint-disable-line @typescript-eslint/no-unused-vars
       this.$router.push({ query });
     }
   }
