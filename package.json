@@ -1,0 +1,11 @@
+{
+  "name": "nuxt-ssr-firebase-sample",
+  "version": "1.0.0",
+  "author": "soarflat <soarflat777@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "build": "sh build.sh",
+    "serve": "yarn build && firebase serve",
+    "deploy": "yarn build && firebase deploy"
+  }
+}
