@@ -1,4 +1,4 @@
-rm -rf {.firebase,app/.nuxt,dist}
+yarn clean
 mkdir -p dist
 cd app;yarn build;cd -;
 

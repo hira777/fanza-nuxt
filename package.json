@@ -4,6 +4,7 @@
   "author": "soarflat <soarflat777@gmail.com>",
   "license": "MIT",
   "scripts": {
+    "clean": "rm -rf {.firebase,app/.nuxt,dist}",
     "build": "sh build.sh",
     "serve": "yarn build && firebase serve --port 3000",
     "deploy": "yarn build && firebase deploy"
