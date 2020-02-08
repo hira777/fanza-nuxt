@@ -5,7 +5,7 @@
   "license": "MIT",
   "scripts": {
     "build": "sh build.sh",
-    "serve": "yarn build && firebase serve",
+    "serve": "yarn build && firebase serve --port 3000",
     "deploy": "yarn build && firebase deploy"
   }
 }

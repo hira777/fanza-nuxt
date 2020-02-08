@@ -30,6 +30,20 @@ import Logo from '~/components/Logo.vue';
 export default {
   components: {
     Logo
+  },
+  async asyncData({ $axios }) {
+    const { data } = await $axios.get('/api/users');
+    return { users: data };
+  },
+  data() {
+    return {
+      users: []
+    };
+  },
+  async created() {
+    const { data } = await this.$axios.get('/api/users');
+    console.log('data', data);
+    console.log('users', this.users);
   }
 };
 </script>
