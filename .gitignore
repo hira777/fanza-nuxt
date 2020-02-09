@@ -66,3 +66,6 @@ node_modules/
 
 # Firebase にデプロイするディレクトリ
 dist
+
+# Cloud Functions をローカルエミュレート時に利用する環境変数が出力されたファイル
+.runtimeconfig.json
