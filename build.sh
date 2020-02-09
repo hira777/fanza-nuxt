@@ -1,6 +1,7 @@
 yarn clean
 mkdir -p dist
 cd app;yarn build;cd -;
+cd functions;yarn build;cd -;
 
 # サーバーファイルをデプロイするディレクトリにコピー
 cp -R functions dist/server
