@@ -13,6 +13,7 @@
     "sourceMap": true,
     "strict": true,
     "noEmit": true,
+    "experimentalDecorators": true, // vue-property-decorator を利用するのに必要
     "baseUrl": ".",
     "paths": {
       "~/*": [
