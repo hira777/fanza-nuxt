@@ -48,8 +48,9 @@ const config: Configuration = {
     // サーバーで実行される Axios module のデフォルトの baseURL は http://localhost:3000
     // ローカルでの開発では問題ないが、本番環境などの他の環境では動作しないため適宜変更する必要がある。
     baseURL: isDevelopment
-      ? 'http://localhost:3000'
-      : process.env.PRODUCTION_BASE_URL
+      ? 'http://localhost:3000/api'
+      : `${process.env.PRODUCTION_BASE_URL}/api}`,
+    browserBaseURL: '/api'
   },
   stylelint: {
     fix: true
@@ -59,7 +60,7 @@ const config: Configuration = {
 if (isDevelopment) {
   config.proxy = {
     // target が https://example.com で
-    // アプリケーション上で /api/users にリクエストした場合
+    // アプリケーション上で http://localhost:3000/api/users にリクエストした場合
     // https://example.com/ssr/api/users に置き換わる
     '/api': {
       target: process.env.DEVLOPMENT_API_ORIGIN,
