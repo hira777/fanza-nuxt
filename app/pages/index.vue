@@ -5,32 +5,21 @@
 <script lang="ts">
 import { Vue, Component } from 'nuxt-property-decorator';
 
+import { itemListService } from '~/api/itemList';
+
 @Component({
-  async asyncData({ $axios }) {
-    const { data } = await $axios.get('/users');
-    const res = await $axios.get('/itemList');
+  async asyncData() {
+    const { data } = await itemListService.get();
+
     return {
-      users: data,
-      items: res.data
+      items: data.items
     };
   }
 })
 export default class Index extends Vue {
-  users: [] = [];
   items: [] = [];
 
-  data() {
-    return {
-      users: []
-    };
-  }
-
-  async created() {
-    const { data } = await this.$axios.get('/users');
-    console.log('data', data);
-    console.log('users', this.users);
-    const { data: apiData } = await this.$axios.get('/itemList');
-    console.log('apiData', apiData);
+  created() {
     console.log('items', this.items);
   }
 }

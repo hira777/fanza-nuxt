@@ -15,7 +15,6 @@
   },
   "main": "lib/index.js",
   "dependencies": {
-    "@nuxtjs/axios": "^5.9.5",
     "axios": "^0.19.2",
     "express": "^4.17.1",
     "firebase-admin": "^8.9.2",

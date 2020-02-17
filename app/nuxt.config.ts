@@ -5,6 +5,10 @@ require('dotenv').config();
 const isDevelopment = process.env.NODE_ENV !== 'production';
 
 const config: Configuration = {
+  env: {
+    DEVLOPMENT_API_ORIGIN: process.env.DEVLOPMENT_API_ORIGIN as string,
+    PRODUCTION_BASE_URL: process.env.PRODUCTION_BASE_URL as string
+  },
   mode: 'universal',
   head: {
     title: process.env.npm_package_name || '',
@@ -39,19 +43,7 @@ const config: Configuration = {
     '@nuxtjs/stylelint-module',
     '@nuxt/typescript-build'
   ],
-  modules: ['@nuxtjs/axios'],
-  axios: {
-    // Axios module を利用すれば @nuxtjs/proxy も利用できる。
-    // そのため、proxy を true にすれば、@nuxtjs/proxy のオプションも指定できるようになる。
-    proxy: true,
-    debug: isDevelopment,
-    // サーバーで実行される Axios module のデフォルトの baseURL は http://localhost:3000
-    // ローカルでの開発では問題ないが、本番環境などの他の環境では動作しないため適宜変更する必要がある。
-    baseURL: isDevelopment
-      ? 'http://localhost:3000/api'
-      : `${process.env.PRODUCTION_BASE_URL}/api}`,
-    browserBaseURL: '/api'
-  },
+  modules: ['@nuxtjs/proxy'],
   stylelint: {
     fix: true
   }
